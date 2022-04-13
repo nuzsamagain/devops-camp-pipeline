@@ -50,7 +50,8 @@ pipeline {
         }
         stage('Database docker build') {
             steps {
-                echo "Building database image"withCredentials([usernameColonPassword(credentialsId: 'nsamreen-harbor-auth', variable: 'HARBOR-AUTH')]) {
+                echo "Building database image"
+                withCredentials([usernameColonPassword(credentialsId: 'nsamreen-harbor-auth', variable: 'HARBOR-AUTH')]) {
                     script {
                         sh 'docker build -t $DB_IMAGE_NAME-$COMMIT_HASH -f ./db/Dockerfile ./afs-labs-student'
                         docker.withRegistry('https://$HARBOR_REGISTRY', 'nsamreen-harbor-auth') {
